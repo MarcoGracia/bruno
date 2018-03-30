@@ -23,10 +23,11 @@ app.post('/register', async (req, res) => {
 
 app.post('/signup', async (req, res) => {
   const data = req.body;
+  console.log(`signup data ${JSON.stringify(data)}`)
   const message = `${data.fullName} has just signed in!`;
   console.log(message)
 
-  pushStuff(message, data.fullName);
+  pushStuff(message, data);
   res.status(200).send('ok');
 })
 
@@ -62,7 +63,7 @@ const pushStuff = (message, data) => {
       to: pushToken,
       sound: 'default',
       body: message,
-      data: {data: data},
+      data,
     })
   }
 
