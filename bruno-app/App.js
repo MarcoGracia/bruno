@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Notifications } from 'expo';
 import registerForPushNotificationsAsync from './src/notifications';
@@ -29,14 +29,14 @@ class App extends React.Component {
     console.log(this.state);
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={{ alignItems: 'center', marginBottom: 25 }}>
           <Logo />
           <Text>WHO DAT SIGNING UP</Text>
         </View>
 
         <View>
-          {this.state.list.map((notification, i) => (
+          {this.state.list.reverse().map((notification, i) => (
             <Card
               key={i}
               fullName={notification.data.fullName}
@@ -46,7 +46,7 @@ class App extends React.Component {
             />
           ))}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
