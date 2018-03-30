@@ -11,12 +11,12 @@
 
 ## api
 
-* Register device:
+* Register device (from app):
 ```c
 $ curl -X PUT -u "<app_key>:<app_secret>" http://<server_ip>:9000/api/device_tokens/<device_token>
 ```
 
-* Get user
+* Send notification (from server):
 ```c
 $ curl -X POST -u "<app_key>:<app_master_secret>" -H "Content-Type: application/json" --data '{"data": {"a_key": "hello world!"}}' http://<server_ip>:9000/api/push/broadcast
 
