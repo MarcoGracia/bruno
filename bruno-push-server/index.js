@@ -8,8 +8,16 @@ const port = 8000;
 app.use(bodyParser.json());
 
 app.post('/register', async (req, res) => {
-  console.log(req.body.token)
-  somePushTokens.push(req.body.token.value) 
+  console.log(`registering ${req.body.token.value}...`)
+
+  if (somePushTokens.includes(req.body.token.value)) {
+    console.log('already registered');
+    res.status(400).send('already registered');
+    return;
+  }
+
+  somePushTokens.push(req.body.token.value)
+  console.log('registered!')
   res.status(200).send('ok')
 });
 
