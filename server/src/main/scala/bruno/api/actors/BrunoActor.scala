@@ -20,7 +20,7 @@ class BrunoActor(appClient: AppClientImpl)(implicit materializer: ActorMateriali
 
   override def receive: Receive = {
     case signup: SignupNotificationDto =>
-      val finalNotification = FinalNotificationDto(s"${signup.firstName.getOrElse("")} ${signup.lastName}", Instant.now().getEpochSecond, city = signup.city)
+      val finalNotification = FinalNotificationDto(s"${signup.firstName.getOrElse("")} ${signup.lastName}", signup.city, Instant.now().getEpochSecond)
       appClient.sendNotification(finalNotification)
 
   }
