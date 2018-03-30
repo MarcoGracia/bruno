@@ -1,11 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import { Notifications } from 'expo';
 import registerForPushNotificationsAsync from './src/notifications';
 import Logo from './src/Logo';
+import Card from './src/Card';
 
-export default class App extends React.Component {
-  state = { notification: {} };
+class App extends React.Component {
+  // hide nav header
+  static navigationOptions = {
+    header: null
+  };
+
+  state = { list: [] };
 
   async componentWillMount() {
     await registerForPushNotificationsAsync();
@@ -13,7 +20,9 @@ export default class App extends React.Component {
   };
 
   _handleNotification = (notification) => {
-    this.setState({ notification: notification });
+    const list = this.state.list.slice().concat([ notification ]);
+
+    this.setState({ list });
   };
 
   render() {
@@ -21,11 +30,22 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Logo />
-        <Text>WHO DAT SIGNING UP</Text>
+        <View style={{ alignItems: 'center', marginBottom: 25 }}>
+          <Logo />
+          <Text>WHO DAT SIGNING UP</Text>
+        </View>
 
-        <Text>Origin: {this.state.notification.origin}</Text>
-        <Text>Data: {JSON.stringify(this.state.notification.data)}</Text>
+        <View>
+          {this.state.list.map((notification, i) => (
+            <Card
+              key={i}
+              fullName={notification.data.fullName}
+              timestamp={notification.data.timestamp}
+              city={notification.data.city}
+              light={Boolean(i % 2)}
+            />
+          ))}
+        </View>
       </View>
     );
   }
@@ -34,8 +54,11 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#20ab00',
     justifyContent: 'flex-start',
   },
+});
+
+export default StackNavigator({
+  Home: { screen: App }
 });
