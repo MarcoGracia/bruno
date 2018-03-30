@@ -13,7 +13,7 @@ object Dtos extends SprayJsonSupport with DefaultJsonProtocol {
 case class SignupNotificationDto (
   email: String,
   reference: Option[Long] = None,
-  gender: String,
+  gender: Option[String],
   initials: Option[String],
   prefixes: Option[String] = None,
   firstName: Option[String] = None,
