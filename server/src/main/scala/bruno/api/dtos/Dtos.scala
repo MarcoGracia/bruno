@@ -6,8 +6,8 @@ import spray.json.DefaultJsonProtocol
 sealed trait Dtos
 
 object Dtos extends SprayJsonSupport with DefaultJsonProtocol {
-  implicit val signupFormat = jsonFormat8(SignupNotificationDto)
-  implicit val finalNotificationFormat = jsonFormat2(FinalNotificationDto)
+  implicit val signupFormat = jsonFormat9(SignupNotificationDto)
+  implicit val finalNotificationFormat = jsonFormat3(FinalNotificationDto)
 }
 
 case class SignupNotificationDto (
@@ -18,10 +18,12 @@ case class SignupNotificationDto (
   prefixes: Option[String] = None,
   firstName: Option[String] = None,
   lastName: String,
-  phone: Option[String]
+  phone: Option[String],
+  city: String
 ) extends Dtos
 
 case class FinalNotificationDto (
   fullName: String, // FirstName + LastName
+  city: String,
   timestamp: Long
 ) extends Dtos
